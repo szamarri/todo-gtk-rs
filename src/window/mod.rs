@@ -29,7 +29,6 @@ impl Window {
         Object::builder().property("application", app).build()
     }
 
-    // ANCHOR: settings
     fn setup_settings(&self) {
         let settings = Settings::new(APP_ID);
         self.imp()
@@ -44,7 +43,6 @@ impl Window {
             .get()
             .expect("`settings` should be set in `setup_settings`.")
     }
-    // ANCHOR_END: settings
 
     fn tasks(&self) -> gio::ListStore {
         // Get state
@@ -55,7 +53,6 @@ impl Window {
             .expect("Could not get current tasks.")
     }
 
-    // ANCHOR: filter
     fn filter(&self) -> Option<CustomFilter> {
         // Get filter_state from settings
         let filter_state: String = self.settings().get("filter");
@@ -88,9 +85,7 @@ impl Window {
             _ => unreachable!(),
         }
     }
-    // ANCHOR_END: filter
 
-    // ANCHOR: setup_tasks
     fn setup_tasks(&self) {
         // Create new model
         let model = gio::ListStore::new::<TaskObject>();
@@ -117,9 +112,7 @@ impl Window {
             ),
         );
     }
-    // ANCHOR_END: setup_tasks
 
-    // ANCHOR: restore_data
     fn restore_data(&self) {
         if let Ok(file) = File::open(data_path()) {
             // Deserialize data from file to vector
@@ -137,9 +130,7 @@ impl Window {
             self.tasks().extend_from_slice(&task_objects);
         }
     }
-    // ANCHOR_END: restore_data
 
-    // ANCHOR: setup_callbacks
     fn setup_callbacks(&self) {
         // Setup callback for activation of the entry
         self.imp().entry.connect_activate(clone!(
@@ -159,7 +150,6 @@ impl Window {
             }
         ));
     }
-    // ANCHOR_END: setup_callbacks
 
     fn new_task(&self) {
         // Get content from entry and clear it
@@ -227,15 +217,12 @@ impl Window {
         self.imp().tasks_list.set_factory(Some(&factory));
     }
 
-    // ANCHOR: setup_actions
     fn setup_actions(&self) {
         // Create action from key "filter" and add to action group "win"
         let action_filter = self.settings().create_action("filter");
         self.add_action(&action_filter);
     }
-    // ANCHOR_END: setup_actions
 
-    // ANCHOR: remove_done_tasks
     fn remove_done_tasks(&self) {
         let tasks = self.tasks();
         let mut position = 0;
@@ -252,5 +239,4 @@ impl Window {
             }
         }
     }
-    // ANCHOR_END: remove_done_tasks
 }
