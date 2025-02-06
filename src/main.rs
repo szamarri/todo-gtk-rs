@@ -4,7 +4,7 @@ mod utils;
 mod window;
 
 use gtk::prelude::*;
-use gtk::{gio, glib, Application};
+use gtk::{gio, glib};
 use window::Window;
 
 const APP_ID: &str = "org.gtk_rs.Todo1";
@@ -14,7 +14,8 @@ fn main() -> glib::ExitCode {
         .expect("Failed to register resources.");
 
     // Create a new application
-    let app = Application::builder().application_id(APP_ID).build();
+    //        👇 changed
+    let app = adw::Application::builder().application_id(APP_ID).build();
 
     // Connect to signals
     app.connect_startup(setup_shortcuts);
@@ -24,13 +25,15 @@ fn main() -> glib::ExitCode {
     app.run()
 }
 
-fn setup_shortcuts(app: &Application) {
+//                       👇 changed
+fn setup_shortcuts(app: &adw::Application) {
     app.set_accels_for_action("win.filter('All')", &["<Ctrl>a"]);
     app.set_accels_for_action("win.filter('Open')", &["<Ctrl>o"]);
     app.set_accels_for_action("win.filter('Done')", &["<Ctrl>d"]);
 }
 
-fn build_ui(app: &Application) {
+//                👇 changed
+fn build_ui(app: &adw::Application) {
     // Create a new custom window and present it
     let window = Window::new(app);
     window.present();
