@@ -1,7 +1,7 @@
 use std::cell::RefCell;
 
 use glib::Binding;
-use gtk::subclass::prelude::*;
+use adw::subclass::prelude::*;
 use gtk::{glib, CheckButton, CompositeTemplate, Label};
 
 // Object holding the state

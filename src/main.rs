@@ -3,7 +3,7 @@ mod task_row;
 mod utils;
 mod window;
 
-use gtk::prelude::*;
+use adw::prelude::*;
 use gtk::{gio, glib};
 use window::Window;
 
